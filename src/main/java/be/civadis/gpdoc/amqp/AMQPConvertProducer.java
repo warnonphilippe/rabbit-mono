@@ -5,7 +5,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import be.civadis.gpdoc.domain.TicketConversion;
+import be.civadis.gpdoc.dto.TicketConversionDto;
 
 /**
  * Producer
@@ -16,9 +16,9 @@ public class AMQPConvertProducer {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void sendTicketConversion(TicketConversion tc) throws Exception {
+    public void sendTicketConversion(TicketConversionDto tc) throws Exception {
         rabbitTemplate.convertAndSend(AMQPConvertConfig.CONVERT_QUEUE_NAME, AMQPConvertConfig.CONVERT_ROUTING_KEY, m -> {
-            m.getMessageProperties().setType(TicketConversion.class.getName());
+            m.getMessageProperties().setType(TicketConversionDto.class.getName());
             m.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
             return m;
         });

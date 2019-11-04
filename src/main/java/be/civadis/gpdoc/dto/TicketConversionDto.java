@@ -1,71 +1,45 @@
-package be.civadis.gpdoc.domain;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
+package be.civadis.gpdoc.dto;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
  * A TicketConversion.
  */
-@Entity
-@Table(name = "ticket_conversion")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class TicketConversion implements Serializable {
+public class TicketConversionDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "source_repo")
     private String sourceRepo;
 
-    @Column(name = "source_path")
     private String sourcePath;
 
-    @Column(name = "source_id")
     private String sourceId;
 
-    @Column(name = "source_mime_type")
     private String sourceMimeType;
 
-    @Column(name = "source_ext")
     private String sourceExt;
 
-    @Column(name = "dest_repo")
     private String destRepo;
 
-    @Column(name = "dest_path")
     private String destPath;
 
-    @Column(name = "dest_id")
     private String destId;
 
-    @Column(name = "dest_mime_type")
     private String destMimeType;
 
-    @Column(name = "dest_description")
     private String destDescription;
 
-    @Column(name = "start_date")
-    private ZonedDateTime startDate;
+    //private ZonedDateTime startDate;
 
-    @Column(name = "end_date")
-    private ZonedDateTime endDate;
+    //private ZonedDateTime endDate;
 
-    @Column(name = "ok")
     private Boolean ok;
 
-    @Column(name = "error_msg")
     private String errorMsg;
 
-    @Column(name = "sending_application")
     private String sendingApplication;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -81,7 +55,7 @@ public class TicketConversion implements Serializable {
         return sourceRepo;
     }
 
-    public TicketConversion sourceRepo(String sourceRepo) {
+    public TicketConversionDto sourceRepo(String sourceRepo) {
         this.sourceRepo = sourceRepo;
         return this;
     }
@@ -94,7 +68,7 @@ public class TicketConversion implements Serializable {
         return sourcePath;
     }
 
-    public TicketConversion sourcePath(String sourcePath) {
+    public TicketConversionDto sourcePath(String sourcePath) {
         this.sourcePath = sourcePath;
         return this;
     }
@@ -107,7 +81,7 @@ public class TicketConversion implements Serializable {
         return sourceId;
     }
 
-    public TicketConversion sourceId(String sourceId) {
+    public TicketConversionDto sourceId(String sourceId) {
         this.sourceId = sourceId;
         return this;
     }
@@ -120,7 +94,7 @@ public class TicketConversion implements Serializable {
         return sourceMimeType;
     }
 
-    public TicketConversion sourceMimeType(String sourceMimeType) {
+    public TicketConversionDto sourceMimeType(String sourceMimeType) {
         this.sourceMimeType = sourceMimeType;
         return this;
     }
@@ -133,7 +107,7 @@ public class TicketConversion implements Serializable {
         return sourceExt;
     }
 
-    public TicketConversion sourceExt(String sourceExt) {
+    public TicketConversionDto sourceExt(String sourceExt) {
         this.sourceExt = sourceExt;
         return this;
     }
@@ -146,7 +120,7 @@ public class TicketConversion implements Serializable {
         return destRepo;
     }
 
-    public TicketConversion destRepo(String destRepo) {
+    public TicketConversionDto destRepo(String destRepo) {
         this.destRepo = destRepo;
         return this;
     }
@@ -159,7 +133,7 @@ public class TicketConversion implements Serializable {
         return destPath;
     }
 
-    public TicketConversion destPath(String destPath) {
+    public TicketConversionDto destPath(String destPath) {
         this.destPath = destPath;
         return this;
     }
@@ -172,7 +146,7 @@ public class TicketConversion implements Serializable {
         return destId;
     }
 
-    public TicketConversion destId(String destId) {
+    public TicketConversionDto destId(String destId) {
         this.destId = destId;
         return this;
     }
@@ -185,7 +159,7 @@ public class TicketConversion implements Serializable {
         return destMimeType;
     }
 
-    public TicketConversion destMimeType(String destMimeType) {
+    public TicketConversionDto destMimeType(String destMimeType) {
         this.destMimeType = destMimeType;
         return this;
     }
@@ -198,7 +172,7 @@ public class TicketConversion implements Serializable {
         return destDescription;
     }
 
-    public TicketConversion destDescription(String destDescription) {
+    public TicketConversionDto destDescription(String destDescription) {
         this.destDescription = destDescription;
         return this;
     }
@@ -207,37 +181,11 @@ public class TicketConversion implements Serializable {
         this.destDescription = destDescription;
     }
 
-    public ZonedDateTime getStartDate() {
-        return startDate;
-    }
-
-    public TicketConversion startDate(ZonedDateTime startDate) {
-        this.startDate = startDate;
-        return this;
-    }
-
-    public void setStartDate(ZonedDateTime startDate) {
-        this.startDate = startDate;
-    }
-
-    public ZonedDateTime getEndDate() {
-        return endDate;
-    }
-
-    public TicketConversion endDate(ZonedDateTime endDate) {
-        this.endDate = endDate;
-        return this;
-    }
-
-    public void setEndDate(ZonedDateTime endDate) {
-        this.endDate = endDate;
-    }
-
     public Boolean isOk() {
         return ok;
     }
 
-    public TicketConversion ok(Boolean ok) {
+    public TicketConversionDto ok(Boolean ok) {
         this.ok = ok;
         return this;
     }
@@ -250,7 +198,7 @@ public class TicketConversion implements Serializable {
         return errorMsg;
     }
 
-    public TicketConversion errorMsg(String errorMsg) {
+    public TicketConversionDto errorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
         return this;
     }
@@ -263,7 +211,7 @@ public class TicketConversion implements Serializable {
         return sendingApplication;
     }
 
-    public TicketConversion sendingApplication(String sendingApplication) {
+    public TicketConversionDto sendingApplication(String sendingApplication) {
         this.sendingApplication = sendingApplication;
         return this;
     }
@@ -281,7 +229,7 @@ public class TicketConversion implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        TicketConversion ticketConversion = (TicketConversion) o;
+        TicketConversionDto ticketConversion = (TicketConversionDto) o;
         if (ticketConversion.getId() == null || getId() == null) {
             return false;
         }
@@ -307,8 +255,6 @@ public class TicketConversion implements Serializable {
             ", destId='" + getDestId() + "'" +
             ", destMimeType='" + getDestMimeType() + "'" +
             ", destDescription='" + getDestDescription() + "'" +
-            ", startDate='" + getStartDate() + "'" +
-            ", endDate='" + getEndDate() + "'" +
             ", ok='" + isOk() + "'" +
             ", errorMsg='" + getErrorMsg() + "'" +
             ", sendingApplication='" + getSendingApplication() + "'" +

@@ -4,7 +4,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
-import be.civadis.gpdoc.domain.TicketConversion;
+import be.civadis.gpdoc.dto.TicketConversionDto;
 
 /**
  * Listener
@@ -23,7 +23,9 @@ public class AMQPConvertListener extends AMQPAbstractListener {
 
     @RabbitListener(queues = AMQPConvertConfig.CONVERT_QUEUE_NAME, concurrency = "3-10")
     //@HystrixCommand(fallbackMethod = "fallbackMessage")
-    public void processConvertMessage(TicketConversion tc) throws Exception {
+    public void processConvertMessage(Object message) throws Exception {
+
+        TicketConversionDto tc = getContent(message, TicketConversionDto.class);
 
         System.out.println("ticket conversion received : " + tc.toString());
 
@@ -35,7 +37,7 @@ public class AMQPConvertListener extends AMQPAbstractListener {
 
         }
 
-        // test echec mais pas de retraitement
+        // test echec mais pas de retraitement (ex lancée si erreur de désérializarion du message)
         // throw new AmqpRejectAndDontRequeueException("Test transmission dans dead queue letter");
         // test requeueing
         // throw new Exception("Test reject Message");
