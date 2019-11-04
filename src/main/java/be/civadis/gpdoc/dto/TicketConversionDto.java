@@ -42,6 +42,9 @@ public class TicketConversionDto implements Serializable {
 
     private String sendingApplication;
 
+    public TicketConversionDto() {
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;

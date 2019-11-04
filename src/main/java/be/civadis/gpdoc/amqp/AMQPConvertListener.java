@@ -1,5 +1,8 @@
 package be.civadis.gpdoc.amqp;
 
+import java.io.IOException;
+
+import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
@@ -22,11 +25,10 @@ public class AMQPConvertListener extends AMQPAbstractListener {
     // TODO : queue pour traitement rapide et prioritaire
 
     @RabbitListener(queues = AMQPConvertConfig.CONVERT_QUEUE_NAME, concurrency = "3-10")
-    //@HystrixCommand(fallbackMethod = "fallbackMessage")
-    public void processConvertMessage(Object message) throws Exception {
+    // @HystrixCommand(fallbackMethod = "fallbackMessage")
+    public void processConvertMessage(Object message) {
 
         TicketConversionDto tc = getContent(message, TicketConversionDto.class);
-
         System.out.println("ticket conversion received : " + tc.toString());
 
         try {

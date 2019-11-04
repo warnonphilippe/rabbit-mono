@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -41,7 +42,7 @@ public abstract class AMQPAbstractListener {
      * @param message
      * @return
      */
-    public <T> T getContent(Object message, Class<T> clazz) throws IOException {
+    public <T> T getContent(Object message, Class<T> clazz) {
         String content = this.getContent(message);
         return getModel(content, clazz);
     }
@@ -63,8 +64,13 @@ public abstract class AMQPAbstractListener {
      * @return
      * @throws IOException
      */
-    public <T> T getModel(String content, Class<T> clazz) throws IOException {
-        return new ObjectMapper().readValue(content, clazz);
+    public <T> T getModel(String content, Class<T> clazz) {
+        try {
+            return new ObjectMapper().readValue(content, clazz);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new AmqpRejectAndDontRequeueException("Error while deserializing object message");
+        }
     }
 
 
