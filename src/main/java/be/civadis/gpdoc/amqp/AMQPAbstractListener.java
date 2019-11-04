@@ -66,6 +66,8 @@ public abstract class AMQPAbstractListener {
      */
     public <T> T getModel(String content, Class<T> clazz) {
         try {
+            System.out.println("Received content :");
+            System.out.println(content);
             return new ObjectMapper().readValue(content, clazz);
         } catch (IOException e) {
             e.printStackTrace();

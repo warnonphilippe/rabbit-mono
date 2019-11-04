@@ -1,14 +1,11 @@
 package be.civadis.gpdoc.dto;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * A TicketConversion.
  */
-public class TicketConversionDto implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class TicketConversionDto {
 
     private Long id;
 
