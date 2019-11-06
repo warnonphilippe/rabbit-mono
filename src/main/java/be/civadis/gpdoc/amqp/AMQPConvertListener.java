@@ -27,8 +27,7 @@ public class AMQPConvertListener extends AMQPAbstractListener {
     // TODO : queue pour traitement rapide et prioritaire
 
     @RabbitListener(
-        queues = AMQPConvertConfig.CONVERT_QUEUE_NAME, 
-        concurrency = "3-10")  // https://docs.spring.io/spring-amqp/docs/current/reference/html/#listener-concurrency
+        queues = AMQPConvertConfig.CONVERT_QUEUE_NAME)
     // @HystrixCommand(fallbackMethod = "fallbackMessage")
     public void processConvertMessage(Object message) {
 
