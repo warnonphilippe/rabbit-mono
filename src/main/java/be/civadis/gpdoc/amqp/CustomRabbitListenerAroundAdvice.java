@@ -7,8 +7,8 @@ import org.springframework.amqp.core.Message;
 /**
  * AOP Around advice wrapper. Every time a message comes in we can do 
  * pre/post processing by using this advice by implementing the before/after methods.
- * @author sjacobs
- *
+ * https://stackoverflow.com/questions/34513662/how-do-we-hook-into-before-after-message-processing-using-rabbitlistener
+ * @author phw
  */
 public class CustomRabbitListenerAroundAdvice implements MethodInterceptor {
 
