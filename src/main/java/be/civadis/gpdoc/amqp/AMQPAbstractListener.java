@@ -33,8 +33,8 @@ public abstract class AMQPAbstractListener {
      * @param message
      * @return
      */
-    public String getContent(Object message){
-        return new String(((Message) message).getBody(), StandardCharsets.UTF_8);
+    public String getContent(Message message){
+        return new String(message.getBody(), StandardCharsets.UTF_8);
     }
 
     /**
@@ -42,7 +42,7 @@ public abstract class AMQPAbstractListener {
      * @param message
      * @return
      */
-    public <T> T getContent(Object message, Class<T> clazz) {
+    public <T> T getContent(Message message, Class<T> clazz) {
         String content = this.getContent(message);
         return getModel(content, clazz);
     }
@@ -52,8 +52,8 @@ public abstract class AMQPAbstractListener {
      * @param message
      * @return
      */
-    public String getType(Object message){
-        return ((Message) message).getMessageProperties().getType();
+    public String getType(Message message){
+        return message.getMessageProperties().getType();
     }
 
     /**
@@ -80,21 +80,21 @@ public abstract class AMQPAbstractListener {
 
     /**
      *
-     * @param message objet du modele à transmettre ou objet de type Message contenant l'objet à transmettre
+     * @param message objet du model à transmettre
      * @param type
      */
-    protected void retryMessage(Object message, String type){
-        rabbitTemplate.convertAndSend(retryQueueName, retryRoutingKey, message, m -> {
+    protected void retryMessage(Object model, String type){
+        rabbitTemplate.convertAndSend(retryQueueName, retryRoutingKey, model, m -> {
             m.getMessageProperties().setType(type);
             m.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
             return m;
         });
     }
 
-    protected void fallbackMessage(Object message, Throwable t){
-        String eventType = getType(message);
+    protected void fallbackMessage(Message object, Throwable t){
+        String eventType = getType(object);
         System.out.println("FALLBACK on event : " + eventType);
-        this.retryMessage(message, eventType);
+        this.retryMessage(object, eventType);
         //si exception dans fallback, elle est transmise a rabbitMQ
     }
 

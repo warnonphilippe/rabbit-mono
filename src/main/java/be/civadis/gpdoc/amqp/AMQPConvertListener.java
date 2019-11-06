@@ -3,6 +3,7 @@ package be.civadis.gpdoc.amqp;
 import java.io.IOException;
 
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
@@ -30,30 +31,32 @@ public class AMQPConvertListener extends AMQPAbstractListener {
         queues = AMQPConvertConfig.CONVERT_QUEUE_NAME, 
         concurrency = "3-10")  // https://docs.spring.io/spring-amqp/docs/current/reference/html/#listener-concurrency
     // @HystrixCommand(fallbackMethod = "fallbackMessage")
-    public void processConvertMessage(Object message) {
+    public void processConvertMessage(Message message) {
 
         TicketConversionDto tc = getContent(message, TicketConversionDto.class);
         System.out.println("ticket conversion received : " + tc.toString());
 
-        
-
         try {
-            // TODO traiter le TicketConversion
+
+            // TODO conversion
+
+            // TODO MAJ ticket (success)
 
             // simuler temps de conversion
             Thread.sleep(5000);
 
-
         } catch (Exception ex){
-            // TODO : traiter erreur de conversion (-> infos dans ticket)
+            ex.printStackTrace();
+            // TODO MAJ ticket (error)
 
+            // exception pour signaler l'échec du traitement du message, mais sans requeing
+            throw new AmqpRejectAndDontRequeueException("Erreur lors du traitement du ticket de conversion : " + message.toString());
+            
+            // si on veut réessayer, lancer un typoe d'exception qui entraîne un requeing
+            // throw new Exception("Erreur lors du traitement du ticket de conversion : " + message.toString());
+            // autre solution, envoi du message vers une retryQueue (doit alors être activée dans la config)
+            // retryMessage(message, getType(message));
         }
-
-        // test echec mais pas de retraitement (ex lancée si erreur de désérializarion du message)
-        // throw new AmqpRejectAndDontRequeueException("Test transmission dans dead queue letter");
-        // test requeueing
-        //throw new RuntimeException("Test reject Message");
-
     }
     
 }
