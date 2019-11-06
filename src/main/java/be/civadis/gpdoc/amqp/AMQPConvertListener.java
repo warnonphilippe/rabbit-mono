@@ -22,20 +22,27 @@ public class AMQPConvertListener extends AMQPAbstractListener {
     // TODO : ajout de la config multitenant dans le projet
     // TODO : ajout lien vers alfresco et service de conversion 
     // TODO : filtre pour recup du tenant et app courante et mise en contexte du listener
-    // TODO : pouvoir lancer N listeners en //, ex : concurrency = "3-10"
     // TODO : pouvoir atteindre rabbit sur k8s
     // TODO revoir trt retry, error, ... existe params spring boot
     // TODO : queue pour traitement rapide et prioritaire
 
-    @RabbitListener(queues = AMQPConvertConfig.CONVERT_QUEUE_NAME)
+    @RabbitListener(
+        queues = AMQPConvertConfig.CONVERT_QUEUE_NAME, 
+        concurrency = "3-10")  // https://docs.spring.io/spring-amqp/docs/current/reference/html/#listener-concurrency
     // @HystrixCommand(fallbackMethod = "fallbackMessage")
     public void processConvertMessage(Object message) {
 
         TicketConversionDto tc = getContent(message, TicketConversionDto.class);
         System.out.println("ticket conversion received : " + tc.toString());
 
+        
+
         try {
             // TODO traiter le TicketConversion
+
+            // simuler temps de conversion
+            Thread.sleep(5000);
+
 
         } catch (Exception ex){
             // TODO : traiter erreur de conversion (-> infos dans ticket)
