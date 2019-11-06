@@ -10,6 +10,7 @@ import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.ExchangeBuilder;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,19 +43,12 @@ public class AMQPConvertConfig {
     
     @Bean
 	public Queue convertQueue() {    
-        Map<String, Object> args = new HashMap<String, Object>();
-        //args.put("x-dead-letter-exchange", AMQPConvertConfig.ERROR_CONVERT_EXCHANGE_NAME);
-        //args.put("x-message-ttl", 600000);
-        return new Queue(CONVERT_QUEUE_NAME,true,false,false, args);
+        return QueueBuilder.durable(CONVERT_QUEUE_NAME).build();
     }
     
     @Bean
-    public List<Binding> convertBindings() {
-        return Arrays.asList(
-            BindingBuilder.bind(convertQueue()).to(convertExchange()).with("*").noargs()
-            //BindingBuilder.bind(retryConvertQueue()).to(retryConvertExchange()).with("*").noargs(),
-            //BindingBuilder.bind(errorConvertQueue()).to(errorConvertExchange()).with("*").noargs()
-        );
+    public Binding convertBinding() {
+        return BindingBuilder.bind(convertQueue()).to(convertExchange()).with("*").noargs();
     }
 
     // si on veut rediriger les messages en erreur vers un retryQueue
@@ -86,6 +80,17 @@ public class AMQPConvertConfig {
         args.put("x-message-ttl", 10000);
         return new Queue(ERROR_CONVERT_QUEUE_NAME,true,false,false, args);
 	}
+*/
+
+/*
+    @Bean
+    public List<Binding> convertBindings() {
+        return Arrays.asList(
+            BindingBuilder.bind(convertQueue()).to(convertExchange()).with("*").noargs()
+            BindingBuilder.bind(retryConvertQueue()).to(retryConvertExchange()).with("*").noargs(),
+            BindingBuilder.bind(errorConvertQueue()).to(errorConvertExchange()).with("*").noargs()
+        );
+    }
 */
     
 

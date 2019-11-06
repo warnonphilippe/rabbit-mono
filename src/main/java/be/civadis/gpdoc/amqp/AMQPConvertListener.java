@@ -19,12 +19,15 @@ public class AMQPConvertListener extends AMQPAbstractListener {
         super(rabbitTemplate);
     }
 
+    // TODO : ajout de la config multitenant dans le projet
+    // TODO : ajout lien vers alfresco et service de conversion 
+    // TODO : filtre pour recup du tenant et app courante et mise en contexte du listener
     // TODO : pouvoir lancer N listeners en //, ex : concurrency = "3-10"
     // TODO : pouvoir atteindre rabbit sur k8s
     // TODO revoir trt retry, error, ... existe params spring boot
     // TODO : queue pour traitement rapide et prioritaire
 
-    @RabbitListener(queues = AMQPConvertConfig.CONVERT_QUEUE_NAME, concurrency = "3-10")
+    @RabbitListener(queues = AMQPConvertConfig.CONVERT_QUEUE_NAME)
     // @HystrixCommand(fallbackMethod = "fallbackMessage")
     public void processConvertMessage(Object message) {
 
@@ -42,7 +45,7 @@ public class AMQPConvertListener extends AMQPAbstractListener {
         // test echec mais pas de retraitement (ex lancée si erreur de désérializarion du message)
         // throw new AmqpRejectAndDontRequeueException("Test transmission dans dead queue letter");
         // test requeueing
-        // throw new Exception("Test reject Message");
+        //throw new RuntimeException("Test reject Message");
 
     }
     

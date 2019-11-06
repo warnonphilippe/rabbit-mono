@@ -17,6 +17,7 @@ public class AMQPConvertProducer {
     private RabbitTemplate rabbitTemplate;
 
     public void sendTicketConversion(TicketConversionDto tc) throws Exception {
+        System.out.println("Send message : " + tc.toString());
         rabbitTemplate.convertAndSend(AMQPConvertConfig.CONVERT_EXCHANGE_NAME, AMQPConvertConfig.CONVERT_ROUTING_KEY, tc ,m -> {
             m.getMessageProperties().setType(TicketConversionDto.class.getName());
             m.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
