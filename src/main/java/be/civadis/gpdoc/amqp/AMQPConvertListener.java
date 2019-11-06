@@ -20,17 +20,17 @@ public class AMQPConvertListener extends AMQPAbstractListener {
         super(rabbitTemplate);
     }
 
-    // TODO : filtre pour recup du tenant et app courante et mise en contexte du listener
+    // TODO : compléter advice pour recup du tenant et app courante et mise en contexte du listener
     // TODO : ajout de la config multitenant dans le projet
     // TODO : ajout lien vers alfresco et service de conversion 
     // TODO : pouvoir atteindre rabbit sur k8s
-    // TODO revoir gestion d'erreur : retry, error, ... voir params spring boot, dlq, ...
-    // TODO : queue pour traitement rapide et prioritaire
+    // TODO : revoir gestion d'erreur : retry, error, ... voir params spring boot, dlq, ...
+    // TODO : a discuter, queue pour traitement rapide et prioritaire
 
     @RabbitListener(
         queues = AMQPConvertConfig.CONVERT_QUEUE_NAME, 
         concurrency = "3-10")  // https://docs.spring.io/spring-amqp/docs/current/reference/html/#listener-concurrency
-    // @HystrixCommand(fallbackMethod = "fallbackMessage")
+    // @HystrixCommand(fallbackMethod = "fallbackMessage") // pour activer un circuit breaker
     public void processConvertMessage(Message message) {
 
         TicketConversionDto tc = getContent(message, TicketConversionDto.class);
@@ -52,7 +52,7 @@ public class AMQPConvertListener extends AMQPAbstractListener {
             // exception pour signaler l'échec du traitement du message, mais sans requeing
             throw new AmqpRejectAndDontRequeueException("Erreur lors du traitement du ticket de conversion : " + message.toString());
             
-            // si on veut réessayer, lancer un typoe d'exception qui entraîne un requeing
+            // si on veut réessayer, lancer un type d'exception qui entraîne un requeing
             // throw new Exception("Erreur lors du traitement du ticket de conversion : " + message.toString());
             // autre solution, envoi du message vers une retryQueue (doit alors être activée dans la config)
             // retryMessage(message, getType(message));

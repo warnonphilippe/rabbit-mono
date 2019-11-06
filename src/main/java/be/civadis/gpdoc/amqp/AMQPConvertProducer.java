@@ -21,6 +21,8 @@ public class AMQPConvertProducer {
         rabbitTemplate.convertAndSend(AMQPConvertConfig.CONVERT_EXCHANGE_NAME, AMQPConvertConfig.CONVERT_ROUTING_KEY, tc ,m -> {
             m.getMessageProperties().setType(TicketConversionDto.class.getName());
             m.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+            m.getMessageProperties().setHeader("tenant", "jhipster");
+            m.getMessageProperties().setHeader("application", "testapp");
             return m;
         });
     }

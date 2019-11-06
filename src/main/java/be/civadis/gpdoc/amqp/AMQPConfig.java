@@ -20,12 +20,32 @@ public class AMQPConfig {
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
         return rabbitTemplate;
     }
-    
+
+    @Bean
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() {
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory( connectionFactory() );
+        //factory.setTaskExecutor(threadPoolTaskExecutor());
+        factory.setMessageConverter(new Jackson2JsonMessageConverter());   
+        factory.setAdviceChain(customRabbitListenerAroundAdvice());
+        //factory.setMaxConcurrentConsumers(10);
+        //factory.setConcurrentConsumers(3);
+        return factory;
+    }
+
+    @Bean
+    public CustomRabbitListenerAroundAdvice customRabbitListenerAroundAdvice() {
+        return new CustomRabbitListenerAroundAdvice();
+    }
+
     @Bean
     public ConnectionFactory connectionFactory() {
         return new CachingConnectionFactory("localhost");
     }
 
     // https://docs.spring.io/spring-amqp/docs/current/reference/html/#_introduction
+    // https://stackoverflow.com/questions/42938118/spring-amqp-rabbitlistener-convert-to-origin-object
     // https://docs.spring.io/spring-amqp/docs/current/reference/html/#listener-concurrency
+    // https://stackoverflow.com/questions/34513662/how-do-we-hook-into-before-after-message-processing-using-rabbitlistener
+
 }
