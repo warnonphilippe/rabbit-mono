@@ -20,7 +20,7 @@ public class AMQPConfig {
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
         return rabbitTemplate;
     }
-
+/*
     @Bean
     public SimpleRabbitListenerContainerFactory myRabbitListenerContainerFactory() {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
@@ -30,7 +30,7 @@ public class AMQPConfig {
         factory.setConcurrentConsumers(3);
         return factory;
     }
-    
+  */  
     @Bean
     public ConnectionFactory connectionFactory() {
         return new CachingConnectionFactory("localhost");
