@@ -114,4 +114,16 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+  multitenancy:
+    issuer-base-uri: 'http://localhost:9080/auth/realms/'
+    tenants:
+      - name: jhipster
+        default: true
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:h2:file:./target/h2db/db/gpdoc;DB_CLOSE_DELAY=-1
+        username: gpdoc
+        password:
+        hikari:
+          poolName: Hikari
+          auto-commit: false

@@ -2,6 +2,7 @@ package be.civadis.gpdoc.config;
 
 import be.civadis.gpdoc.security.*;
 
+import multitenancy.GatewayTenantFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -86,6 +87,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
             .oauth2Login()
         .and()
+            .addFilterAfter(new GatewayTenantFilter(), CorsFilter.class)
             .oauth2ResourceServer()
                 .jwt()
                 .jwtAuthenticationConverter(mapGroupOrRolesClaimToGrantedAuthorities());

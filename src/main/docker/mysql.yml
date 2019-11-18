@@ -1,6 +1,6 @@
 version: '2'
 services:
-  gpdoc-mysql:
+  rabbit-mono-mysql:
     image: mysql:8.0.16
     # volumes:
     #     - ~/volumes/jhipster/gpdoc/mysql/:/var/lib/mysql/
