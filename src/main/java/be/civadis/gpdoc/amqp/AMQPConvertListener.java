@@ -20,9 +20,8 @@ public class AMQPConvertListener extends AMQPAbstractListener {
         super(rabbitTemplate);
     }
 
-    // TODO : A discuter
-    //      gestion d'erreur : retry, error, ... voir params spring boot, dlq, ...
-    //      discuter, queue pour traitement rapide et prioritaire
+    // TODO liaison ged
+    // TODO get ged, exécution de la conversion, stockage ged
 
     @RabbitListener(
         queues = AMQPConvertConfig.CONVERT_QUEUE_NAME, 
@@ -35,7 +34,11 @@ public class AMQPConvertListener extends AMQPAbstractListener {
 
         try {
 
+            // TODO get document from GED
+
             // TODO conversion
+
+            // TODO save converted file in GED
 
             // TODO MAJ ticket (success)
 
@@ -55,5 +58,9 @@ public class AMQPConvertListener extends AMQPAbstractListener {
             // retryMessage(message, getType(message));
         }
     }
+
+    // TODO : A discuter
+    //      gestion d'erreur : retry, error, ... voir params spring boot, dlq, ...
+    //      queue pour traitement rapide et prioritaire ?
     
 }
