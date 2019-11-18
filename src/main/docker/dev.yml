@@ -1,0 +1,14 @@
+version: '2'
+services:
+  rabbit-mono-mysql:
+    extends:
+      file: mysql.yml
+      service: workshop-mysql
+  keycloak:
+    extends:
+      file: keycloak.yml
+      service: keycloak
+  rabbit:
+    extends:
+      file: rabbit.yml
+      service: rabbit
