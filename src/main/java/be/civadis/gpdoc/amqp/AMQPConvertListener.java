@@ -20,12 +20,9 @@ public class AMQPConvertListener extends AMQPAbstractListener {
         super(rabbitTemplate);
     }
 
-    // TODO : compléter advice pour recup du tenant et app courante et mise en contexte du listener
-    // TODO : ajout de la config multitenant dans le projet
-    // TODO : ajout lien vers alfresco et service de conversion 
-    // TODO : pouvoir atteindre rabbit sur k8s
-    // TODO : revoir gestion d'erreur : retry, error, ... voir params spring boot, dlq, ...
-    // TODO : a discuter, queue pour traitement rapide et prioritaire
+    // TODO : A discuter
+    //      gestion d'erreur : retry, error, ... voir params spring boot, dlq, ...
+    //      discuter, queue pour traitement rapide et prioritaire
 
     @RabbitListener(
         queues = AMQPConvertConfig.CONVERT_QUEUE_NAME, 
