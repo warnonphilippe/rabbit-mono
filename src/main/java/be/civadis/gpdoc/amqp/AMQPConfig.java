@@ -22,12 +22,12 @@ public class AMQPConfig {
     }
 
     @Bean
-    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() {
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setConnectionFactory( connectionFactory() );
-        //factory.setTaskExecutor(threadPoolTaskExecutor());
+        factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(new Jackson2JsonMessageConverter());   
         factory.setAdviceChain(customRabbitListenerAroundAdvice());
+        //factory.setTaskExecutor(threadPoolTaskExecutor());
         //factory.setMaxConcurrentConsumers(10);
         //factory.setConcurrentConsumers(3);
         return factory;
@@ -37,12 +37,12 @@ public class AMQPConfig {
     public CustomRabbitListenerAroundAdvice customRabbitListenerAroundAdvice() {
         return new CustomRabbitListenerAroundAdvice();
     }
-
+/*
     @Bean
     public ConnectionFactory connectionFactory() {
         return new CachingConnectionFactory("localhost");
     }
-
+*/
     // https://docs.spring.io/spring-amqp/docs/current/reference/html/#_introduction
     // https://stackoverflow.com/questions/42938118/spring-amqp-rabbitlistener-convert-to-origin-object
     // https://docs.spring.io/spring-amqp/docs/current/reference/html/#listener-concurrency

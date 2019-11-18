@@ -68,6 +68,12 @@ spring:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
     cache: false
+  # Config RabbitMQ
+  rabbitmq:
+    host: localhost # RabbitMQ host.
+    username: guest # Login to authenticate against the broker.
+    password: guest # Password to authenticate against the broker.
+    port: 5672 # RabbitMQ port.
 
 server:
   port: 8080
