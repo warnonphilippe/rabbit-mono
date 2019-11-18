@@ -1,4 +1,4 @@
-package multitenancy;
+package be.civadis.gpdoc.multitenancy;
 
 import org.hibernate.engine.jdbc.connections.spi.AbstractDataSourceBasedMultiTenantConnectionProviderImpl;
 

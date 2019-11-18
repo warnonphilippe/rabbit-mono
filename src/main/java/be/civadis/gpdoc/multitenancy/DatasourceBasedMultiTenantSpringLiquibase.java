@@ -1,4 +1,4 @@
-package multitenancy;
+package be.civadis.gpdoc.multitenancy;
 
 import liquibase.exception.LiquibaseException;
 import liquibase.integration.spring.MultiTenantSpringLiquibase;

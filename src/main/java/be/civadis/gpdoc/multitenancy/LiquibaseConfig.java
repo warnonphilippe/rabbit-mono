@@ -1,4 +1,4 @@
-package multitenancy;
+package be.civadis.gpdoc.multitenancy;
 
 import be.civadis.gpdoc.config.ApplicationProperties;
 import be.civadis.gpdoc.config.LiquibaseContextTestCondition;

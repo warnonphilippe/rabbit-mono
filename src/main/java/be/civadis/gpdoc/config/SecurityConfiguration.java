@@ -2,7 +2,7 @@ package be.civadis.gpdoc.config;
 
 import be.civadis.gpdoc.security.*;
 
-import multitenancy.GatewayTenantFilter;
+import be.civadis.gpdoc.multitenancy.GatewayTenantFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;

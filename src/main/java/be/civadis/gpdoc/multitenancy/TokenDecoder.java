@@ -1,4 +1,4 @@
-package multitenancy;
+package be.civadis.gpdoc.multitenancy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;

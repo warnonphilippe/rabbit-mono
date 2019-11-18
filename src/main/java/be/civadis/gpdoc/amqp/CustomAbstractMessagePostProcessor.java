@@ -1,5 +1,6 @@
 package be.civadis.gpdoc.amqp;
 
+import be.civadis.gpdoc.multitenancy.TenantContext;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageDeliveryMode;
@@ -13,9 +14,8 @@ public abstract class CustomAbstractMessagePostProcessor implements MessagePostP
     @Override
     public Message postProcessMessage(Message message) throws AmqpException {
         message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
-        // TODO récupérer tenant et application du contexte
-        message.getMessageProperties().setHeader("tenant", "jhipster");
-        message.getMessageProperties().setHeader("application", "testapp");
+        message.getMessageProperties().setHeader("tenant", TenantContext.getCurrentTenant());
+        message.getMessageProperties().setHeader("application", TenantContext.getCurrentApp());
         return addAdditionnalInfos(message);
     }
 
