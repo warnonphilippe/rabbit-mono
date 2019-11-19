@@ -25,6 +25,8 @@ public class Runner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        // simulation d'envois de messages pour le tenant jhipster
+
         TenantContext.setCurrentApp("testapp");
 
         Arrays.asList(1, 2, 3, 4).stream()
@@ -39,10 +41,17 @@ public class Runner implements CommandLineRunner {
             }
         );
 
+        // simulation d'envois de message pour le tenant jhipster2
+
         TenantContext.setCurrentTenant("jhipster2");
         producer.sendTicketConversion(createDto(5));
-    
+
         //context.close();
+
+        // dans l'application gpdoc, les messages seront envoyés suite aux appels rest (dans l'ancienne version, lancait des threads)
+        //  -> création de ticket
+        //  -> envoi d'un message
+        //  -> retour du ticket
     }
 
     private TicketConversionDto createDto(Integer idx){
