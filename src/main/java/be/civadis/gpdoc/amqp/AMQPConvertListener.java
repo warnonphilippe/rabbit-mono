@@ -20,11 +20,8 @@ public class AMQPConvertListener extends AMQPAbstractListener {
         super(rabbitTemplate);
     }
 
-    // TODO liaison ged
-    // TODO get ged, exécution de la conversion, stockage ged
-
     @RabbitListener(
-        queues = AMQPConvertConfig.CONVERT_QUEUE_NAME, 
+        queues = AMQPConvertConfig.CONVERT_QUEUE_NAME,
         concurrency = "3-10")  // https://docs.spring.io/spring-amqp/docs/current/reference/html/#listener-concurrency
     // @HystrixCommand(fallbackMethod = "fallbackMessage") // pour activer un circuit breaker
     public void processConvertMessage(Message message) {
@@ -34,11 +31,12 @@ public class AMQPConvertListener extends AMQPAbstractListener {
 
         try {
 
-            // TODO get document from GED
+            // TODO traitement du ticket
 
-            // TODO conversion
-
-            // TODO save converted file in GED
+            // exemple, si conversion d'un fichier de la ged
+            //      get document
+            //      conversion
+            //      save document
 
             // TODO MAJ ticket (success)
 
@@ -46,12 +44,14 @@ public class AMQPConvertListener extends AMQPAbstractListener {
             Thread.sleep(5000);
 
         } catch (Exception ex){
+            //log error
             ex.printStackTrace();
+
             // TODO MAJ ticket (error)
 
             // exception pour signaler l'échec du traitement du message, mais sans requeing
             throw new AmqpRejectAndDontRequeueException("Erreur lors du traitement du ticket de conversion : " + message.toString());
-            
+
             // si on veut réessayer, lancer un type d'exception qui entraîne un requeing
             // throw new Exception("Erreur lors du traitement du ticket de conversion : " + message.toString());
             // autre solution, envoi du message vers une retryQueue (doit alors être activée dans la config)
@@ -59,8 +59,9 @@ public class AMQPConvertListener extends AMQPAbstractListener {
         }
     }
 
-    // TODO : A discuter
-    //      gestion d'erreur : retry, error, ... voir params spring boot, dlq, ...
-    //      queue pour traitement rapide et prioritaire ?
-    
+    //Dans le cas d'une conversion ou d'un merge, on cas d'erreur, on la signale dans le ticket
+    //Pour les envois ebox, on doit implémenter un réessai après un temps d'attente
+    // -> transférer le message dans une queue d'attente (si < nb max d'essai)
+    // -> après un temps d'attente dans la queue, retransfert vers le queue de traitement
+
 }
