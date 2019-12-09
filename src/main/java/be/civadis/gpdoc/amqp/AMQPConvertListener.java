@@ -6,9 +6,11 @@ import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import be.civadis.gpdoc.dto.TicketConversionDto;
+import be.civadis.gpdoc.multitenancy.TenantContext;
 
 /**
  * Listener
@@ -24,10 +26,9 @@ public class AMQPConvertListener extends AMQPAbstractListener {
         queues = AMQPConvertConfig.CONVERT_QUEUE_NAME,
         concurrency = "3-10")  // https://docs.spring.io/spring-amqp/docs/current/reference/html/#listener-concurrency
     // @HystrixCommand(fallbackMethod = "fallbackMessage") // pour activer un circuit breaker
-    public void processConvertMessage(Message message) {
+        public void processConvertMessage(@Payload TicketConversionDto tc) {
 
-        TicketConversionDto tc = getContent(message, TicketConversionDto.class);
-        System.out.println("ticket conversion received : " + tc.toString());
+        System.out.println("Tenant " + TenantContext.getCurrentTenant() + " : ticket conversion received : " + tc.toString());
 
         try {
 
@@ -50,7 +51,7 @@ public class AMQPConvertListener extends AMQPAbstractListener {
             // TODO MAJ ticket (error)
 
             // exception pour signaler l'échec du traitement du message, mais sans requeing
-            throw new AmqpRejectAndDontRequeueException("Erreur lors du traitement du ticket de conversion : " + message.toString());
+            throw new AmqpRejectAndDontRequeueException("Erreur lors du traitement du ticket de conversion : " + tc.toString());
 
             // si on veut réessayer, lancer un type d'exception qui entraîne un requeing
             // throw new Exception("Erreur lors du traitement du ticket de conversion : " + message.toString());
