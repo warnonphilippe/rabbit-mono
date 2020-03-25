@@ -7,7 +7,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import be.civadis.gpdoc.dto.TicketConversionDto;
+import be.civadis.gpdoc.dto.TicketConversionDTO;
 import be.civadis.gpdoc.multitenancy.TenantContext;
 
 /**
@@ -24,7 +24,7 @@ public class MessageConversionListener extends AbstractMessageListener {
         queues = AmqpConvertQueuesBizConfiguration.CONVERT_QUEUE_NAME,
         concurrency = "3-10")  // https://docs.spring.io/spring-amqp/docs/current/reference/html/#listener-concurrency
     // @HystrixCommand(fallbackMethod = "fallbackMessage") // pour activer un circuit breaker
-        public void processConvertMessage(@Payload TicketConversionDto tc) {
+        public void onConversionMessage(@Payload TicketConversionDTO tc) {
 
         System.out.println("Tenant " + TenantContext.getCurrentTenant() + " : ticket conversion received : " + tc.toString());
 

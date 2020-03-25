@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * A TicketConversion.
  */
-public class TicketConversionDto {
+public class TicketConversionDTO {
 
     private Long id;
 
@@ -39,7 +39,7 @@ public class TicketConversionDto {
 
     private String sendingApplication;
 
-    public TicketConversionDto() {
+    public TicketConversionDTO() {
     }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -55,7 +55,7 @@ public class TicketConversionDto {
         return sourceRepo;
     }
 
-    public TicketConversionDto sourceRepo(String sourceRepo) {
+    public TicketConversionDTO sourceRepo(String sourceRepo) {
         this.sourceRepo = sourceRepo;
         return this;
     }
@@ -68,7 +68,7 @@ public class TicketConversionDto {
         return sourcePath;
     }
 
-    public TicketConversionDto sourcePath(String sourcePath) {
+    public TicketConversionDTO sourcePath(String sourcePath) {
         this.sourcePath = sourcePath;
         return this;
     }
@@ -81,7 +81,7 @@ public class TicketConversionDto {
         return sourceId;
     }
 
-    public TicketConversionDto sourceId(String sourceId) {
+    public TicketConversionDTO sourceId(String sourceId) {
         this.sourceId = sourceId;
         return this;
     }
@@ -94,7 +94,7 @@ public class TicketConversionDto {
         return sourceMimeType;
     }
 
-    public TicketConversionDto sourceMimeType(String sourceMimeType) {
+    public TicketConversionDTO sourceMimeType(String sourceMimeType) {
         this.sourceMimeType = sourceMimeType;
         return this;
     }
@@ -107,7 +107,7 @@ public class TicketConversionDto {
         return sourceExt;
     }
 
-    public TicketConversionDto sourceExt(String sourceExt) {
+    public TicketConversionDTO sourceExt(String sourceExt) {
         this.sourceExt = sourceExt;
         return this;
     }
@@ -120,7 +120,7 @@ public class TicketConversionDto {
         return destRepo;
     }
 
-    public TicketConversionDto destRepo(String destRepo) {
+    public TicketConversionDTO destRepo(String destRepo) {
         this.destRepo = destRepo;
         return this;
     }
@@ -133,7 +133,7 @@ public class TicketConversionDto {
         return destPath;
     }
 
-    public TicketConversionDto destPath(String destPath) {
+    public TicketConversionDTO destPath(String destPath) {
         this.destPath = destPath;
         return this;
     }
@@ -146,7 +146,7 @@ public class TicketConversionDto {
         return destId;
     }
 
-    public TicketConversionDto destId(String destId) {
+    public TicketConversionDTO destId(String destId) {
         this.destId = destId;
         return this;
     }
@@ -159,7 +159,7 @@ public class TicketConversionDto {
         return destMimeType;
     }
 
-    public TicketConversionDto destMimeType(String destMimeType) {
+    public TicketConversionDTO destMimeType(String destMimeType) {
         this.destMimeType = destMimeType;
         return this;
     }
@@ -172,7 +172,7 @@ public class TicketConversionDto {
         return destDescription;
     }
 
-    public TicketConversionDto destDescription(String destDescription) {
+    public TicketConversionDTO destDescription(String destDescription) {
         this.destDescription = destDescription;
         return this;
     }
@@ -185,7 +185,7 @@ public class TicketConversionDto {
         return ok;
     }
 
-    public TicketConversionDto ok(Boolean ok) {
+    public TicketConversionDTO ok(Boolean ok) {
         this.ok = ok;
         return this;
     }
@@ -198,7 +198,7 @@ public class TicketConversionDto {
         return errorMsg;
     }
 
-    public TicketConversionDto errorMsg(String errorMsg) {
+    public TicketConversionDTO errorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
         return this;
     }
@@ -211,7 +211,7 @@ public class TicketConversionDto {
         return sendingApplication;
     }
 
-    public TicketConversionDto sendingApplication(String sendingApplication) {
+    public TicketConversionDTO sendingApplication(String sendingApplication) {
         this.sendingApplication = sendingApplication;
         return this;
     }
@@ -229,7 +229,7 @@ public class TicketConversionDto {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        TicketConversionDto ticketConversion = (TicketConversionDto) o;
+        TicketConversionDTO ticketConversion = (TicketConversionDTO) o;
         if (ticketConversion.getId() == null || getId() == null) {
             return false;
         }
