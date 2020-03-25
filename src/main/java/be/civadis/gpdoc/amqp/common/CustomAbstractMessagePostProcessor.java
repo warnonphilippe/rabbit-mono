@@ -1,4 +1,4 @@
-package be.civadis.gpdoc.amqp;
+package be.civadis.gpdoc.amqp.common;
 
 import be.civadis.gpdoc.multitenancy.TenantContext;
 import org.springframework.amqp.AmqpException;
@@ -20,5 +20,5 @@ public abstract class CustomAbstractMessagePostProcessor implements MessagePostP
     }
 
     public abstract Message addAdditionnalInfos(Message message) throws AmqpException;
-    
+
 }

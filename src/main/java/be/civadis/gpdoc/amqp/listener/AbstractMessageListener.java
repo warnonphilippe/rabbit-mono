@@ -1,30 +1,32 @@
-package be.civadis.gpdoc.amqp;
+package be.civadis.gpdoc.amqp.listener;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import be.civadis.gpdoc.amqp.common.AbstractMessageService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
-public abstract class AMQPAbstractListener {
+public abstract class AbstractMessageListener extends AbstractMessageService {
 
-    protected RabbitTemplate rabbitTemplate;
-    protected final String retryQueueName;
+    private static final Logger log = LoggerFactory.getLogger(AbstractMessageListener.class);
+
+    protected final String retryExchangeName;
     protected final String retryRoutingKey;
-    
-    public AMQPAbstractListener(RabbitTemplate rabbitTemplate) {
-        this.rabbitTemplate = rabbitTemplate;
-        this.retryQueueName = null;
-        this.retryRoutingKey = null;
+
+    public AbstractMessageListener(RabbitTemplate rabbitTemplate) {
+        this(rabbitTemplate, null, null);
     }
 
-    public AMQPAbstractListener(RabbitTemplate rabbitTemplate, String retryQueueName, String retryRoutingKey) {
-        this.rabbitTemplate = rabbitTemplate;
-        this.retryQueueName = retryQueueName;
+    public AbstractMessageListener(RabbitTemplate rabbitTemplate, String retryExchangeName, String retryRoutingKey) {
+        super(rabbitTemplate);
+        this.retryExchangeName = retryExchangeName;
         this.retryRoutingKey = retryRoutingKey;
     }
 
@@ -66,11 +68,9 @@ public abstract class AMQPAbstractListener {
      */
     public <T> T getModel(String content, Class<T> clazz) {
         try {
-            System.out.println("Received content :");
-            System.out.println(content);
             return new ObjectMapper().readValue(content, clazz);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             throw new AmqpRejectAndDontRequeueException("Error while deserializing object message");
         }
     }
@@ -80,21 +80,17 @@ public abstract class AMQPAbstractListener {
 
     /**
      *
-     * @param message objet du model à transmettre
-     * @param type
+     * @param model objet du model à transmettre
      */
-    protected void retryMessage(Object model, String type){
-        rabbitTemplate.convertAndSend(retryQueueName, retryRoutingKey, model, m -> {
-            m.getMessageProperties().setType(type);
-            m.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
-            return m;
-        });
+    protected void retryMessage(Object model){
+        if (retryExchangeName == null || StringUtils.isBlank(retryExchangeName) || retryRoutingKey == null || StringUtils.isBlank(retryRoutingKey)) {
+            throw new IllegalArgumentException("RetryQueueName && RetryRoutingKey doivent être défini");
+        }
+        this.convertAndSend(retryExchangeName, retryRoutingKey, model);
     }
 
-    protected void fallbackMessage(Message object, Throwable t){
-        String eventType = getType(object);
-        System.out.println("FALLBACK on event : " + eventType);
-        this.retryMessage(object, eventType);
+    protected void fallbackMessage(Message object){
+        this.retryMessage(object);
         //si exception dans fallback, elle est transmise a rabbitMQ
     }
 

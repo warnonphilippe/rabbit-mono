@@ -1,24 +1,21 @@
 package be.civadis.gpdoc;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import be.civadis.gpdoc.amqp.producer.MessageService;
 import be.civadis.gpdoc.multitenancy.TenantContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
-import be.civadis.gpdoc.amqp.AMQPConvertProducer;
 import be.civadis.gpdoc.dto.TicketConversionDto;
 
 @Component
 public class Runner implements CommandLineRunner {
 
     @Autowired
-    private AMQPConvertProducer producer;
+    private MessageService producer;
     @Autowired
     private ConfigurableApplicationContext context;
 
@@ -34,7 +31,7 @@ public class Runner implements CommandLineRunner {
             .forEach(dto -> {
                 try {
                     TenantContext.setCurrentTenant("jhipster");
-                    producer.sendTicketConversion(dto);
+                    producer.envoyerMessageConversion(dto);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -44,7 +41,7 @@ public class Runner implements CommandLineRunner {
         // simulation d'envois de message pour le tenant jhipster2
 
         TenantContext.setCurrentTenant("jhipster2");
-        producer.sendTicketConversion(createDto(5));
+        producer.envoyerMessageConversion(createDto(5));
 
         //context.close();
 

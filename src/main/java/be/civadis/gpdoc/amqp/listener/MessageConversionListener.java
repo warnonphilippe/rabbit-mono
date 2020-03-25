@@ -1,9 +1,7 @@
-package be.civadis.gpdoc.amqp;
+package be.civadis.gpdoc.amqp.listener;
 
-import java.io.IOException;
-
+import be.civadis.gpdoc.amqp.config.AmqpConvertQueuesBizConfiguration;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -16,14 +14,14 @@ import be.civadis.gpdoc.multitenancy.TenantContext;
  * Listener
  */
 @Component
-public class AMQPConvertListener extends AMQPAbstractListener {
+public class MessageConversionListener extends AbstractMessageListener {
 
-    public AMQPConvertListener(RabbitTemplate rabbitTemplate) {
+    public MessageConversionListener(RabbitTemplate rabbitTemplate) {
         super(rabbitTemplate);
     }
 
     @RabbitListener(
-        queues = AMQPConvertConfig.CONVERT_QUEUE_NAME,
+        queues = AmqpConvertQueuesBizConfiguration.CONVERT_QUEUE_NAME,
         concurrency = "3-10")  // https://docs.spring.io/spring-amqp/docs/current/reference/html/#listener-concurrency
     // @HystrixCommand(fallbackMethod = "fallbackMessage") // pour activer un circuit breaker
         public void processConvertMessage(@Payload TicketConversionDto tc) {
