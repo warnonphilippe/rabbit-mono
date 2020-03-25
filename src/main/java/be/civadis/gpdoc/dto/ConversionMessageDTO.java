@@ -1,5 +1,7 @@
 package be.civadis.gpdoc.dto;
 
+import java.util.List;
+
 public class ConversionMessageDTO {
 
     private TicketConversionDTO ticketConversion;
