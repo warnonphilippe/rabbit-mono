@@ -1,4 +1,4 @@
-package be.civadis.gpdoc.amqp.exception;
+package be.civadis.gpdoc.service.exception;
 
 public class EboxRetryableException extends Exception{
 
