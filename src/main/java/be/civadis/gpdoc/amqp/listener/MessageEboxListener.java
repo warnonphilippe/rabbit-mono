@@ -2,6 +2,7 @@ package be.civadis.gpdoc.amqp.listener;
 
 import be.civadis.gpdoc.amqp.config.AmqpConvertQueuesBizConfiguration;
 import be.civadis.gpdoc.amqp.config.AmqpEboxQueuesBizConfiguration;
+import be.civadis.gpdoc.amqp.exception.EboxRetryableException;
 
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -38,30 +39,21 @@ public class MessageEboxListener extends AbstractMessageListener {
             // celui-ci devra effectué les traitements et mettre le ticket à jour
             // en cas d'erreur, le service devra mettre aussi le ticket à jour et lancer une exception afin de prévenir le listener
 
-            // simuler temps d'envoi ebox
+            // simuler temps d'envoi ebox avec retry
             Thread.sleep(5000);
+            throw new EboxRetryableException("test erreur retryable");
 
-        } catch (Exception ex){ //catcher erreur retryable
-            //log error
-            ex.printStackTrace();
-
-            // exception pour signaler l'échec du traitement du message, mais sans requeing
-            // throw new AmqpRejectAndDontRequeueException("Erreur lors du traitement du ticket de ebox : " + dto.toString());
-
-            // si on veut réessayer ke plus tot possible, lancer un type d'exception qui entraîne un requeing
-            // throw new Exception("Erreur lors du traitement du ticket de conversion : " + message.toString());
-
-            // autre solution, envoi du message vers une retryQueue (doit alors être activée dans la config)
+        } catch (EboxRetryableException ex){
+            // envoi du message vers une retryQueue (doit alors être activée dans la config)
             // TODO : limiter le nombre de retrys
             retryMessage(dto);
+
+        } catch (Exception ex){
+            // exception pour signaler l'échec du traitement du message, mais sans requeing
+            throw new AmqpRejectAndDontRequeueException("Erreur lors du traitement du ticket de ebox : " + dto.toString(), ex);
         }
 
-        // TODO catch erreur not retryable
-    }
 
-    //Dans le cas d'une conversion ou d'un merge, on cas d'erreur, on la signale dans le ticket
-    //Pour les envois ebox, on doit implémenter un réessai après un temps d'attente
-    // -> transférer le message dans une queue d'attente (si < nb max d'essai)
-    // -> après un temps d'attente dans la queue, retransfert vers le queue de traitement
+    }
 
 }
