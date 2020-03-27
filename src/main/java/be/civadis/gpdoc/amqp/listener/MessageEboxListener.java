@@ -1,6 +1,5 @@
 package be.civadis.gpdoc.amqp.listener;
 
-import be.civadis.gpdoc.amqp.config.AmqpConvertQueuesBizConfiguration;
 import be.civadis.gpdoc.amqp.config.AmqpEboxQueuesBizConfiguration;
 
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
@@ -10,7 +9,6 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import be.civadis.gpdoc.dto.EboxMessageDTO;
-import be.civadis.gpdoc.dto.TicketConversionDTO;
 import be.civadis.gpdoc.multitenancy.TenantContext;
 import be.civadis.gpdoc.service.exception.EboxRetryableException;
 
@@ -25,10 +23,12 @@ public class MessageEboxListener extends AbstractMessageListener {
     }
 
     @RabbitListener(
-        queues = AmqpEboxQueuesBizConfiguration.EBOX_QUEUE_NAME,
+        queues = AmqpEboxQueuesBizConfiguration.ENVOI_EBOX_QUEUE_NAME,
         concurrency = "3-10")  // https://docs.spring.io/spring-amqp/docs/current/reference/html/#listener-concurrency
     // @HystrixCommand(fallbackMethod = "fallbackMessage") // pour activer un circuit breaker
         public void onEboxMessage(@Payload EboxMessageDTO dto) {
+
+        //if (dto.)
 
         System.out.println("Tenant " + TenantContext.getCurrentTenant() + " : ticket ebox received : " + dto.toString());
 
@@ -46,6 +46,8 @@ public class MessageEboxListener extends AbstractMessageListener {
         } catch (EboxRetryableException ex){
             // envoi du message vers une retryQueue (doit alors être activée dans la config)
             // TODO : limiter le nombre de retrys
+
+            //if (dto.ge)
 
             retryMessage(dto);
 

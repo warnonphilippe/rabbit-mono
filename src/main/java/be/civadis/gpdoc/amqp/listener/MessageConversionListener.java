@@ -33,6 +33,8 @@ public class MessageConversionListener extends AbstractMessageListener {
             // appel de documentConversionService...
             // celui-ci devra effectué les traitements et mettre le ticket à jour
             // en cas d'erreur, le service devra mettre aussi le ticket à jour et lancer une exception afin de prévenir le listener
+            // le dto contient soit l'id du fichier dans la ged, soit le path du fichier temporaire (cas fichier uploadé pas en ged)
+            // ainsi que le ticket
 
             // simuler temps de conversion
             Thread.sleep(5000);
