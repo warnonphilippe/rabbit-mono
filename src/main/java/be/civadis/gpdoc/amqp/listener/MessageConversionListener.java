@@ -6,7 +6,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
-import be.civadis.gpdoc.dto.ConversionMessageDTO;
+import be.civadis.gpdoc.amqp.dto.ConversionMessageDTO;
 import be.civadis.gpdoc.multitenancy.TenantContext;
 
 /**

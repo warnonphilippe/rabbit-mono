@@ -1,6 +1,5 @@
 package be.civadis.gpdoc.amqp.config;
 
-import be.civadis.gpdoc.amqp.common.RabbitListenerBizAroundAdvice;
 import be.civadis.gpdoc.multitenancy.TenantContext;
 import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;

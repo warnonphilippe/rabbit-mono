@@ -2,13 +2,13 @@ package be.civadis.gpdoc.amqp.listener;
 
 import be.civadis.gpdoc.amqp.config.AmqpEboxQueuesBizConfiguration;
 
+import be.civadis.gpdoc.domain.TicketEnvoiEbox;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import be.civadis.gpdoc.dto.EnvoiEboxMessageDTO;
 import be.civadis.gpdoc.multitenancy.TenantContext;
 import be.civadis.gpdoc.service.exception.EboxRetryableException;
 
@@ -26,9 +26,9 @@ public class MessageEboxListener extends AbstractMessageListener {
         queues = AmqpEboxQueuesBizConfiguration.ENVOI_EBOX_QUEUE_NAME,
         concurrency = "3-10")  // https://docs.spring.io/spring-amqp/docs/current/reference/html/#listener-concurrency
     // @HystrixCommand(fallbackMethod = "fallbackMessage") // pour activer un circuit breaker
-        public void onEnvoiEboxMessage(@Payload EnvoiEboxMessageDTO dto) {
+        public void onEnvoiEboxMessage(@Payload TicketEnvoiEbox ticketEbox) {
 
-        System.out.println("Tenant " + TenantContext.getCurrentTenant() + " : ticket ebox received : " + dto.toString());
+        System.out.println("Tenant " + TenantContext.getCurrentTenant() + " : ticket ebox received : " + ticketEbox.toString());
 
         try {
 
@@ -43,15 +43,15 @@ public class MessageEboxListener extends AbstractMessageListener {
 
         } catch (EboxRetryableException ex){
             // envoi du message vers une retryQueue
-            if (dto.getTicketEbox().getEssais() < 3){
-                retryMessage(dto);
+            if (ticketEbox.getEssais() < 3){
+                retryMessage(ticketEbox);
             } else {
-                throw new AmqpRejectAndDontRequeueException("Erreur lors du traitement du ticket de ebox (après ré-essais: " + dto.toString(), ex);
+                throw new AmqpRejectAndDontRequeueException("Erreur lors du traitement du ticket de ebox (après ré-essais: " + ticketEbox.toString(), ex);
             }
 
         } catch (Exception ex){
             // exception pour signaler l'échec du traitement du message, mais sans requeing
-            throw new AmqpRejectAndDontRequeueException("Erreur lors du traitement du ticket de ebox : " + dto.toString(), ex);
+            throw new AmqpRejectAndDontRequeueException("Erreur lors du traitement du ticket de ebox : " + ticketEbox.toString(), ex);
         }
 
 

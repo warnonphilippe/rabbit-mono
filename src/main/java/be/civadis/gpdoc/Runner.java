@@ -8,7 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import be.civadis.gpdoc.amqp.producer.MessageService;
-import be.civadis.gpdoc.dto.TicketConversionDTO;
+import be.civadis.gpdoc.domain.TicketConversion;
 import be.civadis.gpdoc.multitenancy.TenantContext;
 
 @Component
@@ -44,7 +44,7 @@ public class Runner implements CommandLineRunner {
         // simulation d'envois de message pour le tenant jhipster2
 
         TenantContext.setCurrentTenant("jhipster2");
-        TicketConversionDTO dto5 = createDto(5);
+        TicketConversion dto5 = createDto(5);
         producer.envoyerMessageConversion(createDto(5), dto5.getSourcePath(), null);
 
         //context.close();
@@ -55,8 +55,8 @@ public class Runner implements CommandLineRunner {
         //  -> retour du ticket
     }
 
-    private TicketConversionDTO createDto(Integer idx){
-        TicketConversionDTO tc = new TicketConversionDTO();
+    private TicketConversion createDto(Integer idx){
+        TicketConversion tc = new TicketConversion();
         tc.setSendingApplication("testapp");
         tc.setDestPath("/tmp/result"+ idx +".pdf");
         tc.setSourcePath("/tmp/input" + idx +".odt");

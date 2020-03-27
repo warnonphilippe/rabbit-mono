@@ -2,8 +2,8 @@ package be.civadis.gpdoc.amqp.producer;
 
 import be.civadis.gpdoc.amqp.common.AbstractMessageService;
 import be.civadis.gpdoc.amqp.config.AmqpConvertQueuesBizConfiguration;
-import be.civadis.gpdoc.dto.ConversionMessageDTO;
-import be.civadis.gpdoc.dto.TicketConversionDTO;
+import be.civadis.gpdoc.amqp.dto.ConversionMessageDTO;
+import be.civadis.gpdoc.domain.TicketConversion;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class MessageService extends AbstractMessageService {
      * @param conv ticket contenant les infos de la conversion demandée
      * @throws Exception
      */
-    public void envoyerMessageConversion(TicketConversionDTO conv, String fichierAConvertirLocalPath, String fichierAConvertirDocumentUuid) {
+    public void envoyerMessageConversion(TicketConversion conv, String fichierAConvertirLocalPath, String fichierAConvertirDocumentUuid) {
         ConversionMessageDTO msg = new ConversionMessageDTO(conv, fichierAConvertirLocalPath, fichierAConvertirDocumentUuid);
         this.convertAndSend(AmqpConvertQueuesBizConfiguration.CONVERT_EXCHANGE_NAME, AmqpConvertQueuesBizConfiguration.CONVERT_ROUTING_KEY, msg);
     }
