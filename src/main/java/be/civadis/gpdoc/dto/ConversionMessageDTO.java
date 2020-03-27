@@ -6,7 +6,7 @@ public class ConversionMessageDTO {
 
     private TicketConversionDTO ticketConversion;
     private String fichierAConvertirLocalPath;
-    private String fichierGedId;
+    private String fichierAConvertirDocumentUuid;
 
     public ConversionMessageDTO() {
     }
@@ -32,11 +32,11 @@ public class ConversionMessageDTO {
         this.fichierAConvertirLocalPath = fichierAConvertirLocalPath;
     }
 
-    public String getFichierGedId() {
-        return fichierGedId;
+    public String getFichierAConvertirDocumentUuid() {
+        return fichierAConvertirDocumentUuid;
     }
 
-    public void setFichierGedId(String fichierGedId) {
-        this.fichierGedId = fichierGedId;
+    public void setFichierAConvertirDocumentUuid(String fichierAConvertirDocumentUuid) {
+        this.fichierAConvertirDocumentUuid = fichierAConvertirDocumentUuid;
     }
 }

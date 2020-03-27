@@ -8,7 +8,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import be.civadis.gpdoc.dto.EboxMessageDTO;
+import be.civadis.gpdoc.dto.EnvoiEboxMessageDTO;
 import be.civadis.gpdoc.multitenancy.TenantContext;
 import be.civadis.gpdoc.service.exception.EboxRetryableException;
 
@@ -26,7 +26,7 @@ public class MessageEboxListener extends AbstractMessageListener {
         queues = AmqpEboxQueuesBizConfiguration.ENVOI_EBOX_QUEUE_NAME,
         concurrency = "3-10")  // https://docs.spring.io/spring-amqp/docs/current/reference/html/#listener-concurrency
     // @HystrixCommand(fallbackMethod = "fallbackMessage") // pour activer un circuit breaker
-        public void onEboxMessage(@Payload EboxMessageDTO dto) {
+        public void onEnvoiEboxMessage(@Payload EnvoiEboxMessageDTO dto) {
 
         //if (dto.)
 
