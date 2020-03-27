@@ -34,7 +34,7 @@ public class Runner implements CommandLineRunner {
                 try {
                     TenantContext.setCurrentTenant("jhipster");
                     // pour le test, on utilise le fichier local comme ficier temporaire contenant le fichier
-                    producer.envoyerMessageConversion(dto, dto.getSourcePath());
+                    producer.envoyerMessageConversion(dto, dto.getSourcePath(), null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -45,7 +45,7 @@ public class Runner implements CommandLineRunner {
 
         TenantContext.setCurrentTenant("jhipster2");
         TicketConversionDTO dto5 = createDto(5);
-        producer.envoyerMessageConversion(createDto(5), dto5.getSourcePath());
+        producer.envoyerMessageConversion(createDto(5), dto5.getSourcePath(), null);
 
         //context.close();
 

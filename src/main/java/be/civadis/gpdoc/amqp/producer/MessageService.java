@@ -20,20 +20,9 @@ public class MessageService extends AbstractMessageService {
      * @param conv ticket contenant les infos de la conversion demandée
      * @throws Exception
      */
-    public void envoyerMessageConversion(TicketConversionDTO conv, String fichierAConvertirLocalPath) {
-        ConversionMessageDTO msg = new ConversionMessageDTO(conv, fichierAConvertirLocalPath);
+    public void envoyerMessageConversion(TicketConversionDTO conv, String fichierAConvertirLocalPath, String fichierAConvertirDocumentUuid) {
+        ConversionMessageDTO msg = new ConversionMessageDTO(conv, fichierAConvertirLocalPath, fichierAConvertirDocumentUuid);
         this.convertAndSend(AmqpConvertQueuesBizConfiguration.CONVERT_EXCHANGE_NAME, AmqpConvertQueuesBizConfiguration.CONVERT_ROUTING_KEY, msg);
-    }
-
-    /**
-     * Envoyer un message à RabbitMQ contenant un ticketConversion, ce ticket sera traité en asynchrone par un listener dès que le message lui aura été remi
-     *
-     * @param conv ticket contenant les infos de la conversion demandée
-     * @throws Exception
-     */
-    public void envoyerMessageConversionGed(TicketConversionDTO conv, String gedId) {
-        ConversionGedMessageDTO msg = new ConversionGedMessageDTO(conv, gedId);
-        this.convertAndSend(AmqpConvertQueuesBizConfiguration.CONVERT_GED_EXCHANGE_NAME, AmqpConvertQueuesBizConfiguration.CONVERT_GED_ROUTING_KEY, msg);
     }
 
 }

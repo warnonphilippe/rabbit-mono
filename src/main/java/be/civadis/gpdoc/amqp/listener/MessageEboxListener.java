@@ -28,8 +28,6 @@ public class MessageEboxListener extends AbstractMessageListener {
     // @HystrixCommand(fallbackMethod = "fallbackMessage") // pour activer un circuit breaker
         public void onEnvoiEboxMessage(@Payload EnvoiEboxMessageDTO dto) {
 
-        //if (dto.)
-
         System.out.println("Tenant " + TenantContext.getCurrentTenant() + " : ticket ebox received : " + dto.toString());
 
         try {
@@ -44,12 +42,12 @@ public class MessageEboxListener extends AbstractMessageListener {
             throw new EboxRetryableException("test erreur retryable");
 
         } catch (EboxRetryableException ex){
-            // envoi du message vers une retryQueue (doit alors être activée dans la config)
-            // TODO : limiter le nombre de retrys
-
-            //if (dto.ge)
-
-            retryMessage(dto);
+            // envoi du message vers une retryQueue
+            if (dto.getTicketEbox().getEssais() < 3){
+                retryMessage(dto);
+            } else {
+                throw new AmqpRejectAndDontRequeueException("Erreur lors du traitement du ticket de ebox (après ré-essais: " + dto.toString(), ex);
+            }
 
         } catch (Exception ex){
             // exception pour signaler l'échec du traitement du message, mais sans requeing

@@ -8,12 +8,10 @@ public class ConversionMessageDTO {
     private String fichierAConvertirLocalPath;
     private String fichierAConvertirDocumentUuid;
 
-    public ConversionMessageDTO() {
-    }
-
-    public ConversionMessageDTO(TicketConversionDTO ticketConversion, String fichierAConvertirLocalPath) {
+    public ConversionMessageDTO(TicketConversionDTO ticketConversion, String fichierAConvertirLocalPath, String fichierAConvertirDocumentUuid) {
         this.ticketConversion = ticketConversion;
         this.fichierAConvertirLocalPath = fichierAConvertirLocalPath;
+        this.fichierAConvertirDocumentUuid = fichierAConvertirDocumentUuid;
     }
 
     public TicketConversionDTO getTicketConversion() {
