@@ -52,11 +52,13 @@ public class AmqpEboxQueuesBizConfiguration {
     }
 
     @Bean
-    public List<Binding> eboxBindings() {
-        return Arrays.asList(
-            BindingBuilder.bind(envoiEboxQueue()).to(envoiEboxExchange()).with("*").noargs(),
-            BindingBuilder.bind(retryEnvoiEboxQueue()).to(retryEnvoiEboxExchange()).with("*").noargs()
-        );
+    public Binding envoiEboxBinding() {
+        return BindingBuilder.bind(envoiEboxQueue()).to(envoiEboxExchange()).with("*").noargs();
+    }
+
+    @Bean
+    public Binding retryEnvoiEboxBinding() {
+        return BindingBuilder.bind(retryEnvoiEboxQueue()).to(retryEnvoiEboxExchange()).with("*").noargs();
     }
 
 

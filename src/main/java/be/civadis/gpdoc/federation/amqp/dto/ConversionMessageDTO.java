@@ -8,6 +8,9 @@ public class ConversionMessageDTO {
     private String fichierAConvertirLocalPath;
     private String fichierAConvertirDocumentUuid;
 
+    public ConversionMessageDTO() {
+    }
+
     public ConversionMessageDTO(TicketConversion ticketConversion, String fichierAConvertirLocalPath, String fichierAConvertirDocumentUuid) {
         this.ticketConversion = ticketConversion;
         this.fichierAConvertirLocalPath = fichierAConvertirLocalPath;
@@ -36,5 +39,14 @@ public class ConversionMessageDTO {
 
     public void setFichierAConvertirDocumentUuid(String fichierAConvertirDocumentUuid) {
         this.fichierAConvertirDocumentUuid = fichierAConvertirDocumentUuid;
+    }
+
+    @Override
+    public String toString() {
+        return "ConversionMessageDTO{" +
+            "ticketConversion=" + ticketConversion +
+            ", fichierAConvertirLocalPath='" + fichierAConvertirLocalPath + '\'' +
+            ", fichierAConvertirDocumentUuid='" + fichierAConvertirDocumentUuid + '\'' +
+            '}';
     }
 }

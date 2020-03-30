@@ -51,6 +51,19 @@ public class AmqpBizConfiguration {
 
     /*
     @Bean
+    public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
+        final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(producerJackson2MessageConverter());
+        return rabbitTemplate;
+    }
+*/
+    @Bean
+    public Jackson2JsonMessageConverter producerJackson2MessageConverter() {
+        return new Jackson2JsonMessageConverter();
+    }
+
+    /*
+    @Bean
     public ConnectionFactory connectionFactory() {
         return new CachingConnectionFactory("localhost");
     }

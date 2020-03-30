@@ -1,5 +1,6 @@
 package be.civadis.gpdoc.federation.amqp;
 
+import be.civadis.gpdoc.multitenancy.TenantContext;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 public class AbstractMessageService {

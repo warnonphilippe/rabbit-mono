@@ -186,4 +186,27 @@ public class TicketEnvoiEbox {
     }
 
 
+    @Override
+    public String toString() {
+        return "TicketEnvoiEbox{" +
+            "uuid='" + uuid + '\'' +
+            ", titreFr='" + titreFr + '\'' +
+            ", titreNl='" + titreNl + '\'' +
+            ", titreDe='" + titreDe + '\'' +
+            ", titreEn='" + titreEn + '\'' +
+            ", messageType='" + messageType + '\'' +
+            ", eboxMessageId='" + eboxMessageId + '\'' +
+            ", dateDebut=" + dateDebut +
+            ", dateFin=" + dateFin +
+            ", statut='" + statut + '\'' +
+            ", essais=" + essais +
+            ", stockage=" + stockage +
+            ", conversion=" + conversion +
+            ", moteurConversion='" + moteurConversion + '\'' +
+            ", applicationAppelante='" + applicationAppelante + '\'' +
+            ", erreurGed='" + erreurGed + '\'' +
+            ", erreurEbox='" + erreurEbox + '\'' +
+            ", fichierInfosList=" + fichierInfosList +
+            '}';
+    }
 }

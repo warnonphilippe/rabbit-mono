@@ -1,5 +1,6 @@
 package be.civadis.gpdoc.federation.amqp.listener;
 
+import be.civadis.gpdoc.Runner;
 import be.civadis.gpdoc.config.amqp.AmqpEboxQueuesBizConfiguration;
 
 import be.civadis.gpdoc.domain.TicketEnvoiEbox;
@@ -19,7 +20,7 @@ import be.civadis.gpdoc.service.exception.EboxRetryableException;
 public class MessageEboxListener extends AbstractMessageListener {
 
     public MessageEboxListener(RabbitTemplate rabbitTemplate) {
-        super(rabbitTemplate);
+        super(rabbitTemplate, AmqpEboxQueuesBizConfiguration.RETRY_ENVOI_EBOX_EXCHANGE, AmqpEboxQueuesBizConfiguration.ENVOI_EBOX_ROUTING_KEY);
     }
 
     @RabbitListener(
@@ -37,12 +38,19 @@ public class MessageEboxListener extends AbstractMessageListener {
             // en cas d'erreur, le service devra mettre aussi le ticket à jour et lancer une exception afin de prévenir le listener
 
             // simuler temps d'envoi ebox avec retry
+            if (ticketEbox.getEssais() == null){
+                ticketEbox.setEssais(1);
+            } else {
+                ticketEbox.setEssais(ticketEbox.getEssais() + 1);
+            }
             Thread.sleep(5000);
-            throw new EboxRetryableException("test erreur retryable");
+            if (Runner.TEST_ERREUR_CONST.equals(ticketEbox.getTitreEn())){
+                throw new EboxRetryableException("test erreur retryable");
+            }
 
         } catch (EboxRetryableException ex){
             // envoi du message vers une retryQueue
-            if (ticketEbox.getEssais() < 3){
+            if (ticketEbox.getEssais() == null || ticketEbox.getEssais() < 3){
                 retryMessage(ticketEbox);
             } else {
                 throw new AmqpRejectAndDontRequeueException("Erreur lors du traitement du ticket de ebox (après ré-essais: " + ticketEbox.toString(), ex);
