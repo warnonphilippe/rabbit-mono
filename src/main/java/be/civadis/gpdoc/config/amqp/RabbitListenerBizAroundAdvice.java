@@ -1,4 +1,4 @@
-package be.civadis.gpdoc.amqp.config;
+package be.civadis.gpdoc.config.amqp;
 
 import be.civadis.gpdoc.multitenancy.TenantContext;
 import org.aopalliance.intercept.MethodInterceptor;

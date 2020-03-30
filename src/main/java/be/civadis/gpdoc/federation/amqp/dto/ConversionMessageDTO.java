@@ -1,4 +1,4 @@
-package be.civadis.gpdoc.amqp.dto;
+package be.civadis.gpdoc.federation.amqp.dto;
 
 import be.civadis.gpdoc.domain.TicketConversion;
 

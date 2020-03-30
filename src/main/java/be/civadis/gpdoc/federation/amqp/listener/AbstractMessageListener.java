@@ -1,9 +1,9 @@
-package be.civadis.gpdoc.amqp.listener;
+package be.civadis.gpdoc.federation.amqp.listener;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import be.civadis.gpdoc.amqp.common.AbstractMessageService;
+import be.civadis.gpdoc.federation.amqp.AbstractMessageService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.commons.lang3.StringUtils;

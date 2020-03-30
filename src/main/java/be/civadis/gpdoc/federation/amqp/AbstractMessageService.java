@@ -1,4 +1,4 @@
-package be.civadis.gpdoc.amqp.common;
+package be.civadis.gpdoc.federation.amqp;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 

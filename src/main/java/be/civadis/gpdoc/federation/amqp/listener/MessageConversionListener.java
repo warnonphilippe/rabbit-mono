@@ -1,12 +1,12 @@
-package be.civadis.gpdoc.amqp.listener;
+package be.civadis.gpdoc.federation.amqp.listener;
 
-import be.civadis.gpdoc.amqp.config.AmqpConvertQueuesBizConfiguration;
+import be.civadis.gpdoc.config.amqp.AmqpConvertQueuesBizConfiguration;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
-import be.civadis.gpdoc.amqp.dto.ConversionMessageDTO;
+import be.civadis.gpdoc.federation.amqp.dto.ConversionMessageDTO;
 import be.civadis.gpdoc.multitenancy.TenantContext;
 
 /**

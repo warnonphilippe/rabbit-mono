@@ -1,8 +1,7 @@
-package be.civadis.gpdoc.amqp.producer;
+package be.civadis.gpdoc.federation.amqp;
 
-import be.civadis.gpdoc.amqp.common.AbstractMessageService;
-import be.civadis.gpdoc.amqp.config.AmqpConvertQueuesBizConfiguration;
-import be.civadis.gpdoc.amqp.dto.ConversionMessageDTO;
+import be.civadis.gpdoc.config.amqp.AmqpConvertQueuesBizConfiguration;
+import be.civadis.gpdoc.federation.amqp.dto.ConversionMessageDTO;
 import be.civadis.gpdoc.domain.TicketConversion;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;

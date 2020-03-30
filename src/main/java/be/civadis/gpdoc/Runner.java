@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
-import be.civadis.gpdoc.amqp.producer.MessageService;
+import be.civadis.gpdoc.federation.amqp.MessageService;
 import be.civadis.gpdoc.domain.TicketConversion;
 import be.civadis.gpdoc.multitenancy.TenantContext;
 

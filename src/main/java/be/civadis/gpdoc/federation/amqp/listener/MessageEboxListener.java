@@ -1,6 +1,6 @@
-package be.civadis.gpdoc.amqp.listener;
+package be.civadis.gpdoc.federation.amqp.listener;
 
-import be.civadis.gpdoc.amqp.config.AmqpEboxQueuesBizConfiguration;
+import be.civadis.gpdoc.config.amqp.AmqpEboxQueuesBizConfiguration;
 
 import be.civadis.gpdoc.domain.TicketEnvoiEbox;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
