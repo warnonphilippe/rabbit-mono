@@ -25,9 +25,6 @@ public class AmqpEboxQueuesBizConfiguration {
     public final static String RETRY_ENVOI_EBOX_EXCHANGE = "retryEnvoiEboxExchange";
     public final static String RETRY_ENVOI_EBOX_QUEUE_NAME = "retryEnvoiEboxQueue";
 
-    public final static String ERROR_ENVOI_EBOX_EXCHANGE_NAME = "errorEnvoiEboxExchange";
-    public final static String ERROR_ENVOI_EBOX_QUEUE_NAME = "errorEnvoiEboxQueue";
-
 
     @Bean
     public Exchange envoiEboxExchange() {
@@ -54,27 +51,11 @@ public class AmqpEboxQueuesBizConfiguration {
         return new Queue(RETRY_ENVOI_EBOX_QUEUE_NAME,true,false,false, args);
     }
 
-    //si on veut placer les messages en erreurs dans une queues d'erreurs
-
-
-    @Bean
-    public Exchange errorEboxExchange() {
-        return ExchangeBuilder.fanoutExchange(ERROR_ENVOI_EBOX_EXCHANGE_NAME).build();
-	}
-
-    @Bean
-    public Queue errorEboxQueue() {
-        Map<String, Object> args = new HashMap<String, Object>();
-        args.put("x-message-ttl", 30000);
-        return new Queue(ERROR_ENVOI_EBOX_QUEUE_NAME,true,false,false, args);
-	}
-
     @Bean
     public List<Binding> eboxBindings() {
         return Arrays.asList(
             BindingBuilder.bind(envoiEboxQueue()).to(envoiEboxExchange()).with("*").noargs(),
-            BindingBuilder.bind(retryEnvoiEboxQueue()).to(retryEnvoiEboxExchange()).with("*").noargs(),
-            BindingBuilder.bind(errorEboxQueue()).to(errorEboxExchange()).with("*").noargs()
+            BindingBuilder.bind(retryEnvoiEboxQueue()).to(retryEnvoiEboxExchange()).with("*").noargs()
         );
     }
 

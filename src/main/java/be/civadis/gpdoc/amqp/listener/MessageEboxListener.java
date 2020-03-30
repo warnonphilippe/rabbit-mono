@@ -25,7 +25,6 @@ public class MessageEboxListener extends AbstractMessageListener {
     @RabbitListener(
         queues = AmqpEboxQueuesBizConfiguration.ENVOI_EBOX_QUEUE_NAME,
         concurrency = "3-10")  // https://docs.spring.io/spring-amqp/docs/current/reference/html/#listener-concurrency
-    // @HystrixCommand(fallbackMethod = "fallbackMessage") // pour activer un circuit breaker
         public void onEnvoiEboxMessage(@Payload TicketEnvoiEbox ticketEbox) {
 
         System.out.println("Tenant " + TenantContext.getCurrentTenant() + " : ticket ebox received : " + ticketEbox.toString());
@@ -34,7 +33,7 @@ public class MessageEboxListener extends AbstractMessageListener {
 
             // TODO traitement du ticket
             // appel de documentEboxService...
-            // celui-ci devra effectué les traitements et mettre le ticket à jour
+            // celui-ci devra effectuer les traitements et mettre le ticket à jour
             // en cas d'erreur, le service devra mettre aussi le ticket à jour et lancer une exception afin de prévenir le listener
 
             // simuler temps d'envoi ebox avec retry
