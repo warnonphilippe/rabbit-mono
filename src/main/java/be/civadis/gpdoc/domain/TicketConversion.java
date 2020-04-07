@@ -1,6 +1,7 @@
 package be.civadis.gpdoc.domain;
 
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.Objects;
 
 /**
@@ -258,7 +259,7 @@ public class TicketConversion {
                 + destMimeType + ", destPath=" + destPath + ", destRepo=" + destRepo + ", errorMsg=" + errorMsg
                 + ", id=" + id + ", ok=" + ok + ", sendingApplication=" + sendingApplication + ", sourceExt="
                 + sourceExt + ", sourceId=" + sourceId + ", sourceMimeType=" + sourceMimeType + ", sourcePath="
-                + sourcePath + ", sourceRepo=" + sourceRepo + ", startDate=" + startDate + "]";
+                + sourcePath + ", sourceRepo=" + sourceRepo + ", startDate=" + startDate.atZone(ZoneId.systemDefault()) + "]";
     }
 
 
