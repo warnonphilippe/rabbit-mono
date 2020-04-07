@@ -1,5 +1,6 @@
 package be.civadis.gpdoc;
 
+import java.time.Instant;
 import java.util.Arrays;
 
 import be.civadis.gpdoc.domain.FichierInfos;
@@ -28,9 +29,9 @@ public class Runner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        //testConversion();
+        testConversion();
 
-        testEbox();
+        //testEbox();
 
         // dans l'application gpdoc, les messages seront envoyés suite aux appels rest (dans l'ancienne version, lancait des threads)
     }
@@ -62,6 +63,7 @@ public class Runner implements CommandLineRunner {
         tc.setSendingApplication("testapp");
         tc.setDestPath("/tmp/result"+ idx +".pdf");
         tc.setSourcePath("/tmp/input" + idx +".odt");
+        tc.setStartDate(Instant.now());
         return tc;
     }
 

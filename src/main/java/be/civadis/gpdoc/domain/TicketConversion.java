@@ -1,5 +1,6 @@
 package be.civadis.gpdoc.domain;
 
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -38,6 +39,8 @@ public class TicketConversion {
     private String errorMsg;
 
     private String sendingApplication;
+
+    private Instant startDate;
 
     public TicketConversion() {
     }
@@ -221,6 +224,14 @@ public class TicketConversion {
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
+    public Instant getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Instant startDate) {
+        this.startDate = startDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -243,21 +254,12 @@ public class TicketConversion {
 
     @Override
     public String toString() {
-        return "TicketConversion{" +
-            "id=" + getId() +
-            ", sourceRepo='" + getSourceRepo() + "'" +
-            ", sourcePath='" + getSourcePath() + "'" +
-            ", sourceId='" + getSourceId() + "'" +
-            ", sourceMimeType='" + getSourceMimeType() + "'" +
-            ", sourceExt='" + getSourceExt() + "'" +
-            ", destRepo='" + getDestRepo() + "'" +
-            ", destPath='" + getDestPath() + "'" +
-            ", destId='" + getDestId() + "'" +
-            ", destMimeType='" + getDestMimeType() + "'" +
-            ", destDescription='" + getDestDescription() + "'" +
-            ", ok='" + isOk() + "'" +
-            ", errorMsg='" + getErrorMsg() + "'" +
-            ", sendingApplication='" + getSendingApplication() + "'" +
-            "}";
+        return "TicketConversion [destDescription=" + destDescription + ", destId=" + destId + ", destMimeType="
+                + destMimeType + ", destPath=" + destPath + ", destRepo=" + destRepo + ", errorMsg=" + errorMsg
+                + ", id=" + id + ", ok=" + ok + ", sendingApplication=" + sendingApplication + ", sourceExt="
+                + sourceExt + ", sourceId=" + sourceId + ", sourceMimeType=" + sourceMimeType + ", sourcePath="
+                + sourcePath + ", sourceRepo=" + sourceRepo + ", startDate=" + startDate + "]";
     }
+
+
 }

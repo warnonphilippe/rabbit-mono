@@ -1,11 +1,15 @@
 package be.civadis.gpdoc.config.amqp;
 
 import be.civadis.gpdoc.multitenancy.TenantContext;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,9 +22,16 @@ public class AmqpBizConfiguration {
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
-        factory.setMessageConverter(new Jackson2JsonMessageConverter());
+        factory.setMessageConverter(messageConverter());
         factory.setAdviceChain(gpdocRabbitListenerAroundAdvice());
         return factory;
+    }
+
+    @Primary
+    @Bean
+    public Jackson2JsonMessageConverter messageConverter() {
+        ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
+        return new Jackson2JsonMessageConverter(mapper);
     }
 
     @Primary
@@ -57,10 +68,6 @@ public class AmqpBizConfiguration {
         return rabbitTemplate;
     }
 */
-    @Bean
-    public Jackson2JsonMessageConverter producerJackson2MessageConverter() {
-        return new Jackson2JsonMessageConverter();
-    }
 
     /*
     @Bean
